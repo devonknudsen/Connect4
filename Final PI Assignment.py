@@ -7,8 +7,13 @@
 from Tkinter import *
 
 class Piece(object):
-    # subject to change after looking on the grid
-    pieceRadius = 5
+    # radius size for each piece
+    pieceRadius = 44
+
+    # colors for both players pieces
+    p1Color = "red"
+    p2Color = "blue"
+    
     def __init__(self, x, y):
         self.x = float(x)
         self.y = float(y)
@@ -33,19 +38,6 @@ class Piece(object):
     def y(self, newY):
         self._y = newY
 
-# class for a player one piece
-class PlayerOne(Piece):
-    # class variable predefining player one piece color to red
-    p1Color = "red"
-    def __init__(self, x, y):
-        Piece.__init__(self, x, y)
-
-# class for a player two piece
-class PlayerTwo(Piece):
-    # class variable predefining player two piece color to blue
-    p2Color = "blue"
-    def __init__(self, x, y):
-        Piece.__init__(self, x, y)
 
 # class for the game grid
 class Grid(Canvas):
