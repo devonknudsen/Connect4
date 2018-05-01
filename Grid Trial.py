@@ -1,6 +1,6 @@
 from Tkinter import *
 
-# class for the game grid
+# class that creates the game grid
 class Grid(Canvas):
     POINT_RADIUS = 28
     
