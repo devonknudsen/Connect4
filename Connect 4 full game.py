@@ -1,5 +1,6 @@
 
 
+
 #Variables for grid
 Player_1 = '1'
 Player_2 = '2'
@@ -41,30 +42,31 @@ class Board:
 	def checkdiagnol(self, column, row):
 		self.row = row
 		a = self.board[column]
+		#these restrictions were created because it crashes when checking outside the range of the array
 		#don't need to check to the left 
 		if column < 4:
 			b = self.board[column + 1]
 			c = self.board[column + 2]
 			d = self.board[column + 3]
 		#don't need to check to the right
-		if column > 3:	
+		if column > 2:	
 			e = self.board[column - 1]
 			f = self.board[column - 2]
 			g = self.board[column - 3]
 		
-		#Checkin left and up
-		if column > 3 and row > -3:	
+		#Checking left and up
+		if column > 2 and row > -3:	
 			if a[row] == e[row-1] == f[row-2] == g[row-3]:
 				print 'win'		
-		#Checkin right and up
+		#Checking right and up
 		if column < 4 and row > -3:	
 			if a[row] == b[row-1] == c[row-2] == d[row-3]:
 				print 'win'
-		#Checkin left and down
-		if column > 3:			
+		#Checking left and down
+		if column > 2:			
 			if a[row] == e[row+1] == f[row+2] == g[row+3]:
 				print 'win'
-		#Checkin right and down
+		#Checking right and down
 		if column < 4:	
 			if a[row] == b[row+1] == c[row+2] == d[row+3]:
 				print 'win'
@@ -113,7 +115,6 @@ while True:
 	#calls on drop
 	column = input()
 	b.drop(int(column), turn)
-	#b.checkhorizontal(int(column))
 	#switches turns
 	if turn == Player_1:
 		turn = Player_2 
