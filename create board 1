@@ -1,0 +1,25 @@
+def create_board(rows=7, columns=6):
+    board = []
+    for row in range (7):
+        board_row = []
+        for column in range(6):
+            board_row.append()
+        board.append(board_row)
+
+def copy_board(board):
+    rows = len(board)
+    columns = len(board[0])
+    copied = create_board (rows, columns)
+
+    for row in range (7):
+        for column in range(6):
+            copied[row] [column] = board [row] [column]
+        return copied
+
+
+def print_board(board):
+    "prints connect four board"/
+    for row in board:
+        print '|' +'|'.join (row)+ '|'
+
+            
