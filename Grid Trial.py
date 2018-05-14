@@ -17,9 +17,12 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(switches, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(leds, GPIO.OUT)
 
+plPieces = []
+p2Pieces = []
+
 class Piece(object):
     # radius size for each piece
-    pieceRadius = 44
+    pieceRadius = 28
     
     def __init__(self, x, y):
         self.x = x
@@ -43,7 +46,7 @@ class Piece(object):
     # mutator for x value
     @y.setter
     def y(self, newY):
-        self._Y = newY
+        self._y = newY
 
 class P1Piece(Piece):
     Player_1 = '1'
@@ -60,7 +63,6 @@ class P2Piece(Piece):
 # class that creates the game grid
 class Grid(Canvas):
     window = Tk()
-    POINT_RADIUS = 28
     
     # highest x's for each column above the grid
     # differnence between slots is 65
@@ -73,14 +75,19 @@ class Grid(Canvas):
     COLUMN6_X = 544
     
     # highest y before starting "piece" drop
-    TOP_Y = 32
-    MID_Y = 94
+    # differnence between slots is 65
+    ROW0_Y = 94
+    ROW1_Y = 159
+    ROW2_y = 224
+    ROW3_Y = 289
+    ROW4_Y = 354
+    ROW5_Y = 419
     
     # need to define class variables such as midpoint values for grid
     def __init__(self, master):
         Canvas.__init__(self, master, bg="white")
         self.pack(fill=BOTH, expand=1)
-        #master.attributes("-fullscreen", True)
+        master.attributes("-fullscreen", True)
         self.gameGridImg = PhotoImage(file="Connect4GridPi.gif")
         self.setupGUI()
 
@@ -107,7 +114,7 @@ class Grid(Canvas):
             color = p.p1Color
         else:
             color = p.p2Color
-        self.create_oval(p.x, TOP_Y, p.x + Piece.pieceRadius * 2, TOP_Y + Piece.pieceRadius * 2, outline="black", color=color)
+        self.create_oval(p.x, p.y, p.x + Piece.pieceRadius * 2, p.y + Piece.pieceRadius * 2, outline="black", fill=color)
 
     def createValuesBoard(self):
         self.columns = 7
@@ -115,9 +122,12 @@ class Grid(Canvas):
         self.board = [[0] * self.rows for _ in range(self.columns)]
 
     def printBoard(self):
-        for y in range(self.rows):
-            print(' '.join(str(self.board[x][y]) for x in range(self.columns)))
-
+        if DEBUG == True:
+            for y in range(self.rows):
+                print(' '.join(str(self.board[x][y]) for x in range(self.columns)))
+        else:
+            pass
+        
     def playerInput(self):
         pressed = False
             # so long as no switch is currently pressed...
@@ -264,7 +274,9 @@ class Grid(Canvas):
     #temp proof of win	
     def win(self):
             self.printBoard()
-            print 'You Win!'
+            if DEBUG == True:
+                print 'You Win!'
+            GPIO.cleanup()
             sys.exit()
 
     def switchTurn(self, player):
@@ -292,5 +304,12 @@ class Grid(Canvas):
             
 g = Grid(Grid.window)
 g.window.title("Connect 4")
-g.play()
+if DEBUG == True:
+    p1 = P1Piece(Grid.COLUMN0_X, Grid.ROW1_Y)
+    p2 = P2Piece(Grid.COLUMN1_X, Grid.ROW5_Y)
+    p2Pieces.append(p2)
+    plPieces.append(p1)
+    g.createPiece(p1)
+    g.createPiece(p2)
 g.window.mainloop()
+#g.play()
