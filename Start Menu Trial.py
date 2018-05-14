@@ -31,5 +31,5 @@ class StartMenu(Frame):
         quitButton.grid(row=6, column=0, columnspan=10, rowspan=1, sticky=N+S+E+W)
 
 window = Tk()
-start = StartMenu(window)
+StartMenu(window)
 window.mainloop()
