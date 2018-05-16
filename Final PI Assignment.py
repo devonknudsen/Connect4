@@ -324,8 +324,8 @@ def changeState(button):
     if button == "start":
         if DEBUG_LEVEL_1 == True:
             print "2"
-        #for widget in Game.window.winfo_children():
-            #widget.destroy()
+        for widget in Game.window.winfo_children():
+            widget.destroy()
         #g.startMenu.grid_forget()
         #g.startMenu.destroy()
         Game.state = 2
@@ -336,7 +336,7 @@ def changeState(button):
 class StartMenu(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
-        master.resizable(False, False)
+        master.attributes("-fullscreen", True)
         self.setupGUI()
         
     # sets up the GUI for the start menu
